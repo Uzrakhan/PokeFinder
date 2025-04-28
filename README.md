@@ -1,12 +1,55 @@
-# React + Vite
+# PokeFinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application that lets users explore and filter Pokémon data from the [PokeAPI](https://pokeapi.co/).
 
-Currently, two official plugins are available:
+[![Live Demo]](https://poke-finder-psi.vercel.app/)
+![GitHub Repo](https://github.com/Uzrakhan/PokeFinder)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🎣 Fetch first 150 Pokémon with detailed info
+- 🔍 Real-time search by name
+- 🎚️ Filter by Pokémon types
+- 📱 Fully responsive design
+- 🛠️ Error handling & loading states
+- 🎨 Modern card-based UI
+
+## Tech Stack
+
+- **Frontend**: React + Vite
+- **Styling**: Tailwind CSS
+- **API**: [PokeAPI](https://pokeapi.co)
+- **Deployment**: Vercel
+- **Additional Libraries**: react-spinners
+
+## Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/pokemon-explorer.git
+
+2.Install dependencies
+npm install
+
+3.Run the server.
+npm run dev
+
+USAGE
+
+1.Search Pokemon
+Type in the search bar to filter by name
+
+2. Filter by type
+Use the dropdown to select specific Pokémon types
+
+3.View Details:
+Each card has: ID, Name, Image(sprite), Type(s)
+
+
+Key Implementation Details =>
+State Management: React Hooks (useState, useEffect)
+Error Handling: Network error detection & user-friendly messages
+Optimizations: Parallel API requests with Promise.all()
+Responsive Design: Grid layout with breakpoints for mobile/desktop
+
