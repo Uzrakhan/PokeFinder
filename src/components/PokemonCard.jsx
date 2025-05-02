@@ -3,18 +3,13 @@ import { Link } from 'react-router-dom';
 import { useFavorites } from '../context/FavoritesContext';
 
 const PokemonCard = memo(({ pokemon }) => {
-  const {  addFavorite, removeFavorite,isFavorite } = useFavorites();
+  const { isFavorite ,toggleFavorite} = useFavorites();
   const favorite = isFavorite(pokemon.id);
 
   const handleFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    if(isFavorite) {
-      removeFavorite(pokemon.id)
-    }else{
-      addFavorite(pokemon)
-    }
+    toggleFavorite(pokemon)
   };
 
   return (

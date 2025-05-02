@@ -4,12 +4,14 @@ const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState(() => {
-    const saved = localStorage.getItem('favorites');
-    return saved ? JSON.parse(saved) : [];
+    if(typeof window !== 'undefined'){
+        const saved = localStorage.getItem('pokemonFavorites');
+        return saved ? JSON.parse(saved) : [];
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('pokemonFavorites', JSON.stringify(favorites));
   }, [favorites]);
 
   const addFavorite = (pokemon) => {
@@ -26,17 +28,32 @@ export const FavoritesProvider = ({ children }) => {
     );
   };
 
+  const toggleFavorite = (pokemon) => {
+    setFavorites(prev => {
+        const exists = prev.some(f => f.id === pokemon.id);
+        if(exists) {
+            return prev.filter(f => f.id !== pokemon.id)
+        }
+
+        return [...prev, {
+            id: pokemon.id,
+            name: pokemon.name,
+            types: pokemon.types,
+            sprite: pokemon.sprites.front_default
+        }]
+    })
+  }
   const removeFavorite = (id) => {
     setFavorites(prev => prev.filter(p => p.id !== id));
   };
 
   const isFavorite = (id) => {
-    return favorites.some(p => p.id === id);
+    return favorites.some(f => f.id === id);
   }
 
 
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
+    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite,toggleFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );
