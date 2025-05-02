@@ -45,7 +45,7 @@ const Home = () => {
   return (
     <div>
         <SearchBar />
-        <TypeFilter />
+        <TypeFilter types={allTypes}/>
 
         {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
