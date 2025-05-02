@@ -6,21 +6,24 @@ import TypeFilter from './TypeFilter';
 import LoadingSkeleton from './LoadingSkeleton';
 
 const Home = () => {
-  const { pokemon, loading, error } = usePokemon();
+  const { pokemon = [], loading, error } = usePokemon();
 
   // Get unique types from all Pokémon
   
   const allTypes = useMemo(() => {
-    return [
-      ...new Set(
-        (pokemon || []) // Ensure `pokemon` is an array or fallback to an empty array
-          .flatMap((p) =>
-            (p.types || []).map((t) => t.type.name) // Handle missing `types` gracefully
-          )
-      ),
-    ];
+    try {
+      return [...new Set(
+        (pokemon || [])
+          .flatMap(p => (p?.types || []))
+          .map(t => t?.type?.name)
+          .filter(Boolean)
+      )];
+    } catch (error) {
+      console.error('Error calculating types:', error);
+      return [];
+    }
   }, [pokemon]);
-  
+
 
     
   if (error) {

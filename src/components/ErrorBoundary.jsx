@@ -27,7 +27,7 @@ class ErrorBoundary extends Component {
                      className='bg-white text-purple-950 px-4 py-2 rounded'
                      aria-label="Retry loading application"
                     >
-                        Retry
+                        Reload Application
                     </button>
                 </div>
             );
