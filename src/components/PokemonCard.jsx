@@ -20,13 +20,15 @@ const PokemonCard = memo(({ pokemon }) => {
       <div className="relative">
         <button 
           onClick={handleFavorite}
-          className="absolute top-2 right-2 text-2xl"
+          className={`absolute top-2 right-2 text-2xl z-10 transition-transform ${
+            favorite ? 'text-red-500 hover:scale-110' : 'text-white hover:scale-105'
+          }`}
           aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
         >
           {favorite ? '❤️' : '🤍'}
         </button>
         <img
-          src={pokemon.sprites.front_default}
+          src={`https://img.pokemondb.net/sprites/home/normal/${pokemon.name}.png`}
           alt={pokemon.name}
           className="mx-auto h-32 w-32 object-contain"
         />
