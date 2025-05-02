@@ -4,9 +4,16 @@ import PokemonCard from './PokemonCard';
 import SearchBar from './SearchBar';
 import TypeFilter from './TypeFilter';
 import LoadingSkeleton from './LoadingSkeleton';
+import Pagination from './Pagination';
 
 const Home = () => {
-  const { pokemon = [], loading, error } = usePokemon();
+  const { 
+    pokemon,
+    paginatedPokemon,
+    loading,
+    error,
+    itemsPerPage
+    } = usePokemon();
 
   // Get unique types from all Pokémon
   
@@ -37,18 +44,27 @@ const Home = () => {
 
   return (
     <div>
-      <SearchBar />
-      <TypeFilter types={allTypes}/>
+        <SearchBar />
+        <TypeFilter />
 
-      {loading ? (
+        {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[...Array(8)].map((_, i) => <LoadingSkeleton key={i} />)}
+            {/* Use destructured itemsPerPage */}
+            {[...Array(itemsPerPage)].map((_, i) => <LoadingSkeleton key={i} />)}
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {pokemon.map(p => <PokemonCard key={p.id} pokemon={p} />)}
-        </div>
-      )}
+        ) : (
+        <>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {/* Add array check */}
+                {Array.isArray(paginatedPokemon) && 
+                 paginatedPokemon.map(p => (
+                    <PokemonCard key={p.id} pokemon={p}/>
+                 ))
+                }
+            </div>
+        <Pagination /> {/* Add pagination controls */}
+        </>
+        )}
     </div>
   );
 };
