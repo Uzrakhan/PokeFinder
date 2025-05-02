@@ -2,8 +2,7 @@
 
 A React application that lets users explore and filter Pokémon data from the [PokeAPI](https://pokeapi.co/).
 
-[![Live Demo]](https://poke-finder-psi.vercel.app/)
-![GitHub Repo](https://github.com/Uzrakhan/PokeFinder)
+Live Demo(https://poke-finder-psi.vercel.app/)
 
 
 ## Features
