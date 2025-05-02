@@ -1,28 +1,54 @@
-import React from 'react'
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import { useFavorites } from '../context/FavoritesContext';
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = memo(({ pokemon }) => {
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
+  const isFavorite = favorites.some(f => f.id === pokemon.id);
+
+  const handleFavorite = (e) => {
+    e.preventDefault();
+    isFavorite ? removeFavorite(pokemon.id) : addFavorite(pokemon);
+  };
 
   return (
-    <div className='bg-purple-500 p-4 rounded-lg text-white w-full h-full'>
-        <p className="text-white text-lg">{pokemon.id}</p>
-
-        <img 
-         src={pokemon.sprites.front_default}
-         alt={pokemon.name}
-         className='mx-auto h-24 w-24'
+    <Link 
+      to={`/pokemon/${pokemon.id}`}
+      className="bg-purple-900 p-4 rounded-lg hover:transform hover:scale-105 transition-all"
+    >
+      <div className="relative">
+        <button 
+          onClick={handleFavorite}
+          className="absolute top-2 right-2 text-2xl"
+          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+        >
+          {isFavorite ? '❤️' : '🤍'}
+        </button>
+        <img
+          src={pokemon.sprites.front_default}
+          alt={pokemon.name}
+          className="mx-auto h-32 w-32 object-contain"
         />
+      </div>
+      <h3 className="text-center text-white text-xl font-bold capitalize mt-2">
+        {pokemon.name}
+      </h3>
+      <div className="flex justify-center gap-2 mt-2">
+        {pokemon.types.map(type => (
+          <span 
+            key={type.type.name}
+            className={`px-3 py-1 rounded-full text-sm ${
+              type.type.name === 'fire' ? 'bg-red-500' :
+              type.type.name === 'water' ? 'bg-blue-500' :
+              'bg-gray-500'
+            }`}
+          >
+            {type.type.name}
+          </span>
+        ))}
+      </div>
+    </Link>
+  );
+});
 
-        <h3 className="text-xl font-bold mb-2 capitalize text-center">{pokemon.name}</h3>
-
-        <div className='flex gap-2 justify-center'>
-            {pokemon.types.map((type,index) => (
-                <span className="px-3 py-1 bg-gray-700 rounded-full text-sm" key={index}>
-                    {type.type.name}
-                </span>
-            ))}
-        </div>
-    </div>
-  )
-}
-
-export default PokemonCard
+export default PokemonCard;

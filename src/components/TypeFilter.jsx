@@ -1,19 +1,32 @@
 import React from 'react'
+import { usePokemon } from '../context/PokemonContext'
 
-const TypeFilter = ({ types, onTypeChange }) => {
+const TypeFilter = ({ types = [] }) => {
+  const [selectedTypes,setSelectedTypes] = usePokemon();
+
+  const handleTypeToggle = (type) => {
+    setSelectedTypes(prev => 
+      prev.includes(type) 
+        ? prev.filter(t => t !== type) 
+        : [...prev, type]
+    );
+  };
+
   return (
-    <div className='mb-2'>
-        <select 
-         onChange={(e) => onTypeChange(e.target.value)}
-         className='w-full max-w-md mx-auto block px-4 py-2 rounded-lg mb-6'
+    <div className="type-filter mb-4 flex flex-wrap gap-2">
+      {types.map(type =>(
+        <button 
+         key={type}
+         className={`px-4 py-2 rounded-full text-sm ${
+          selectedTypes.includes(type)
+            ? 'bg-purple-500 text-white'
+            : 'bg-gray-200 text-gray-700'
+          }`}
+         onClick={() => handleTypeToggle(type)}
         >
-            <option value="all">All Types</option>
-            {types.map(type => (
-                <option value={type} key={type} className="capitalize">
-                    {type}
-                </option>
-            ))}
-        </select>
+          {type}
+        </button>
+      ))}
     </div>
   )
 }
