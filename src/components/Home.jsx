@@ -1,5 +1,6 @@
 import { usePokemon } from '../context/PokemonContext';
 import { useMemo } from 'react';
+import { useFavorites } from '../context/FavoritesContext';
 import PokemonCard from './PokemonCard';
 import SearchBar from './SearchBar';
 import TypeFilter from './TypeFilter';
@@ -15,6 +16,8 @@ const Home = () => {
     itemsPerPage
     } = usePokemon();
 
+    const { favorites } = useFavorites();
+    
   // Get unique types from all Pokémon
   
   const allTypes = useMemo(() => {

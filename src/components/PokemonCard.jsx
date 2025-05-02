@@ -3,12 +3,18 @@ import { Link } from 'react-router-dom';
 import { useFavorites } from '../context/FavoritesContext';
 
 const PokemonCard = memo(({ pokemon }) => {
-  const { favorites, addFavorite, removeFavorite } = useFavorites();
-  const isFavorite = favorites.some(f => f.id === pokemon.id);
+  const {  addFavorite, removeFavorite,isFavorite } = useFavorites();
+  const favorite = isFavorite(pokemon.id);
 
   const handleFavorite = (e) => {
     e.preventDefault();
-    isFavorite ? removeFavorite(pokemon.id) : addFavorite(pokemon);
+    e.stopPropagation();
+
+    if(isFavorite) {
+      removeFavorite(pokemon.id)
+    }else{
+      addFavorite(pokemon)
+    }
   };
 
   return (
@@ -20,9 +26,9 @@ const PokemonCard = memo(({ pokemon }) => {
         <button 
           onClick={handleFavorite}
           className="absolute top-2 right-2 text-2xl"
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
         >
-          {isFavorite ? '❤️' : '🤍'}
+          {favorite ? '❤️' : '🤍'}
         </button>
         <img
           src={pokemon.sprites.front_default}

@@ -13,18 +13,39 @@ export const FavoritesProvider = ({ children }) => {
   }, [favorites]);
 
   const addFavorite = (pokemon) => {
-    setFavorites(prev => [...prev, pokemon]);
+    setFavorites(
+        prev => [
+            ...prev,
+            {
+                id: pokemon.id,
+                name: pokemon.name,
+                types: pokemon.types,
+                sprite: pokemon.sprites.front_default
+            }
+        ]
+    );
   };
 
   const removeFavorite = (id) => {
     setFavorites(prev => prev.filter(p => p.id !== id));
   };
 
+  const isFavorite = (id) => {
+    return favorites.some(p => p.id === id);
+  }
+
+
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite }}>
+    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );
 };
 
-export const useFavorites = () => useContext(FavoritesContext);
+export const useFavorites = () => {
+    const context = useContext(FavoritesContext)
+    if(!context) {
+        throw new Error('useFavorites must be used within a FavoritesProvider');
+    }
+    return context;
+}
