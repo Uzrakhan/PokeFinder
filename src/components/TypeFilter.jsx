@@ -4,6 +4,8 @@ import { usePokemon } from '../context/PokemonContext'
 const TypeFilter = ({ types = [] }) => {
   const [selectedTypes,setSelectedTypes] = usePokemon();
 
+  if (!types || !Array.isArray(types)) return null;
+  
   const handleTypeToggle = (type) => {
     setSelectedTypes(prev => 
       prev.includes(type) 

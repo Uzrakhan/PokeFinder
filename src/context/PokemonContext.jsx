@@ -15,8 +15,11 @@ export const PokemonProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=150`);
+        if (!response.ok) throw new Error('Network response failed');
+
         const data = await response.json();
-        
+        if (!data.results || !Array.isArray(data.results)) return;
+
         const details = await Promise.all(
           data.results.map(async (p) => {
             try {

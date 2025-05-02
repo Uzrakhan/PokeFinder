@@ -9,14 +9,20 @@ const Home = () => {
   const { pokemon, loading, error } = usePokemon();
 
   // Get unique types from all Pokémon
+  
   const allTypes = useMemo(() => {
-    return [...new Set(
-      pokemon.flatMap(p => 
-        p.types.map(t => t.type.name)
-      )
-    )];
+    return [
+      ...new Set(
+        (pokemon || []) // Ensure `pokemon` is an array or fallback to an empty array
+          .flatMap((p) =>
+            (p.types || []).map((t) => t.type.name) // Handle missing `types` gracefully
+          )
+      ),
+    ];
   }, [pokemon]);
+  
 
+    
   if (error) {
     return (
       <div className="text-red-400 text-center p-8">
