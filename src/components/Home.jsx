@@ -13,11 +13,12 @@ const Home = () => {
     paginatedPokemon,
     loading,
     error,
-    itemsPerPage
+    itemsPerPage,
+    searchTerm
     } = usePokemon();
 
     const { favorites } = useFavorites();
-    
+
   // Get unique types from all Pokémon
   
   const allTypes = useMemo(() => {
@@ -48,6 +49,14 @@ const Home = () => {
   return (
     <div>
         <SearchBar />
+
+        {/* Add search term display */}
+        {searchTerm && !loading && (
+            <div className="text-white text-center mb-4">
+            Showing results for: "{searchTerm}"
+            </div>
+        )}
+        
         <TypeFilter types={allTypes}/>
 
         {loading ? (
